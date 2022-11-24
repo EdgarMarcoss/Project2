@@ -1,0 +1,23 @@
+<svg width="103" height="234" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <ellipse stroke="#000" ry="50" rx="50" id="svg_1" cy="116.69176" cx="51.35135" fill="#ffffff"/>
+  <g id="svg_12">
+   <path transform="rotate(15.3694 64.218 19.9971)" stroke="#000" id="svg_11" d="m62.45594,11.33883l3.52423,0l0,17.31657l-3.52423,0l0,-17.31657z" fill="#ffffff"/>
+   <path transform="rotate(5.42868 54.2766 18.739)" stroke="#000" id="svg_10" d="m52.51446,12.64588l3.52423,0l0,12.18616l-3.52423,0l0,-12.18616z" fill="#ffffff"/>
+   <path transform="rotate(-10.3467 44.5849 18.0782)" stroke="#000" id="svg_9" d="m42.82283,11.98509l3.52423,0l0,12.18615l-3.52423,0l0,-12.18615z" fill="#ffffff"/>
+   <path transform="rotate(-22.6715 35.1432 19.7768)" stroke="#000" id="svg_8" d="m33.38105,11.11856l3.52423,0l0,17.31657l-3.52423,0l0,-17.31657z" fill="#ffffff"/>
+   <path id="svg_21" d="m50.49802,62.40084c-11.60221,0 -21,-8.95028 -21,-20c0,-11.04972 9.39779,-20 21,-20c11.60221,0 21,8.95028 21,20c0,11.04972 -9.39779,20 -21,20z" opacity="undefined" stroke="#000" fill="#ffffff"/>
+   <ellipse stroke="#000" ry="7.26872" rx="26.95475" id="svg_24" cy="7.26872" cx="49.33955" fill="#ffffff"/>
+  </g>
+  <g transform="rotate(-179.869 52.9432 202.372)" id="svg_19">
+   <path transform="rotate(15.3694 67.8216 191.168)" stroke="#000" id="svg_13" d="m66.05954,182.51l3.52423,0l0,17.31657l-3.52423,0l0,-17.31657z" fill="#ffffff"/>
+   <path transform="rotate(5.42868 57.8802 189.91)" stroke="#000" id="svg_14" d="m56.11806,183.81705l3.52423,0l0,12.18616l-3.52423,0l0,-12.18616z" fill="#ffffff"/>
+   <path transform="rotate(-10.3467 48.1886 189.249)" stroke="#000" id="svg_15" d="m46.42643,183.15626l3.52423,0l0,12.18616l-3.52423,0l0,-12.18616z" fill="#ffffff"/>
+   <path transform="rotate(-22.6715 38.7467 190.948)" stroke="#000" id="svg_16" d="m36.98465,182.28974l3.52423,0l0,17.31657l-3.52423,0l0,-17.31657z" fill="#ffffff"/>
+   <path id="svg_17" d="m54.10162,233.57202c-11.60221,0 -21,-8.95028 -21,-20c0,-11.04973 9.39779,-20 21,-20c11.60221,0 21,8.95027 21,20c0,11.04972 -9.39779,20 -21,20z" opacity="undefined" stroke="#000" fill="#ffffff"/>
+   <ellipse stroke="#000" ry="7.26872" rx="26.95475" id="svg_18" cy="178.4399" cx="52.94316" fill="#ffffff"/>
+  </g>
+ </g>
+
+</svg>
