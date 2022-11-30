@@ -215,19 +215,30 @@ class Usuario {
         $listaUsuarios = mysqli_query($conexion, $sql);        
         return $listaUsuarios->fetch_all(MYSQLI_ASSOC); 
     }
-    public static function crearUsuario($nombre,$apellido,$correo,$pass,$tel,$dni){
-
-            require_once "conexion.php";
-
-            $sql="INSERT INTO tbl_usuarios (personal_usuario,nombre_usuario,apellido_usuario,email_usuario,password_usuario,telefono_usuario,dni_usuario) VALUES ('mantenimiento',?,?,?,?,?,?);";
-            $stmt=mysqli_stmt_init($conexion);
-            mysqli_stmt_prepare($stmt,$sql);
-            mysqli_stmt_bind_param($stmt,"ssssss",$nombre,$apellido,$correo,$pass,$tel,$dni);
-            mysqli_stmt_execute($stmt);
-
-
-            mysqli_stmt_close($stmt);
-        
-        
+    public static function crearUsuario($tipo,$nombre,$apellido,$correo,$pass,$tel,$dni){
+        require_once "conexion.php";
+        $sql="INSERT INTO tbl_usuarios (personal_usuario,nombre_usuario,apellido_usuario,email_usuario,password_usuario,telefono_usuario,dni_usuario) VALUES (?,?,?,?,?,?,?);";
+        $consulta = $pdo->prepare($sql);
+        $consulta->bindParam(1, $tipo);
+        $consulta->bindParam(2, $nombre);
+        $consulta->bindParam(3, $apellido);
+        $consulta->bindParam(4, $correo);
+        $consulta->bindParam(5, $pass);
+        $consulta->bindParam(6, $tel);
+        $consulta->bindParam(7, $dni);
+        $consulta->execute();
+    }
+    public static function editarUsuario($idp,$tipo,$nombre,$apellido,$correo,$pass,$tel,$dni){
+        require_once "conexion.php";
+        $consulta = $pdo->prepare("UPDATE `tbl_usuarios` SET `personal_usuario` = :tipo, `nombre_usuario` = :nombre, `apellido_usuario` = :ape, `email_usuario` = :email, `password_usuario` = :pass, `telefono_usuario` = :telf, `dni_usuario` = :dni WHERE `tbl_usuarios`.`id` = :id ");
+        $consulta->bindParam(':id', $idp);
+        $consulta->bindParam(':tipo', $tipo);
+        $consulta->bindParam(':nombre', $nombre);
+        $consulta->bindParam(':ape', $apellido);
+        $consulta->bindParam(':email', $correo);
+        $consulta->bindParam(':pass', $pass);
+        $consulta->bindParam(':telf', $tel);
+        $consulta->bindParam(':dni', $dni);
+        $consulta->execute();
     }
 }

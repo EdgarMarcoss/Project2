@@ -22,7 +22,7 @@ if (!isset($_SESSION['user'])) {
     <nav>
         <h3>Salas</h3>
     </nav>
-    <a class="log-out" aria-current="page" href="../controller/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>   
+    <a class="log-out" aria-current="page" href="../controller/logout.php"><i class="icono fa-solid fa-arrow-right-from-bracket"></i></a>   
 
 
     <div class="background">
@@ -85,8 +85,14 @@ if (!isset($_SESSION['user'])) {
 
             } ?>
             <div class="btn-reservas">
-                <button id="all-salas"><i class="fa-solid fa-border-all"></i></button>
+                <button id="all-salas"><i class="icono fa-solid fa-border-all"></i></button>
                 <a href="vista.php"><button>Reservas</button></a>
+                <?php
+                if ($listaUsuarios[0]['personal_usuario']=='admin'){?>
+                    <a href="gestion.php"><button>Gestión</button></a>
+                    <?php
+                }
+            ?>
             </div>
         </div>
         <div class="color-back ">

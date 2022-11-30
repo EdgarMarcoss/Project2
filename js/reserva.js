@@ -39,60 +39,25 @@ window.addEventListener('load', () => {
                                
 
     if (document.getElementsByClassName('active') && document.getElementById('activa')) {
-    document.getElementById('activa').classList.add('active');
-    document.getElementById('test').classList.add('activa')
+        document.getElementById('activa').classList.add('active');
+        document.getElementById('test').classList.add('activa')
 
-    ver(document.getElementById('activa').value);
+        ver(document.getElementById('activa').value);
+        let btnHeader = document.getElementsByClassName('reservaP');
 
-        document.getElementById('activa').onclick = () => {
-            document.getElementsByClassName('active')[0].classList.remove('active');
-            document.getElementById('test').classList.add('activa')
-            document.getElementById('activa').classList.add('active');
-            document.getElementsByTagName('body')[0].classList.remove('resp-scroll');
-            document.getElementById('test').classList.remove('resp');
-            ver(document.getElementById('activa').value);
+        for (let i = 0; i < btnHeader.length; i++) {
+            btnHeader.item(i).addEventListener('click', () => {
+                document.getElementsByClassName('active')[0].classList.remove('active');
+                if (btnHeader.item(i).getAttribute('value') == 'activa') {
+                    document.getElementById('test').classList.add('activa');
+                } else {
+                    document.getElementById('test').classList.remove('activa');
+                }
+                btnHeader.item(i).classList.add('active');
+                document.getElementsByTagName('body')[0].classList.remove('resp-scroll');
+                btnHeader.item(i).classList.remove('resp');
+                ver(btnHeader.item(i).value);
+            });
         }
-        document.getElementById('finalizar').onclick = () => {
-            document.getElementsByClassName('active')[0].classList.remove('active');
-            document.getElementById('test').classList.remove('activa')
-            document.getElementById('finalizar').classList.add('active');
-            document.getElementsByTagName('body')[0].classList.remove('resp-scroll');
-            document.getElementById('test').classList.remove('resp');
-            ver(document.getElementById('finalizar').value);
-        }
-        document.getElementById('estadis').onclick = () => {
-            document.getElementsByClassName('active')[0].classList.remove('active');
-            document.getElementById('estadis').classList.add('active');
-            document.getElementById('test').classList.remove('activa')
-            document.getElementsByTagName('body')[0].classList.add('resp-scroll');
-            document.getElementById('test').classList.toggle('resp');
-            document.getElementsByClassName('b-reserva')[0].classList.add('graph')
-            ver(document.getElementById('estadis').value);
-        }
-        document.getElementById('activa2').onclick = () => {
-            document.getElementsByClassName('active')[0].classList.remove('active');
-            document.getElementById('test').classList.add('activa')
-            document.getElementById('activa2').classList.add('active');
-            document.getElementsByTagName('body')[0].classList.remove('resp-scroll');
-            document.getElementById('test').classList.remove('resp');
-            ver(document.getElementById('activa2').value);
-        }
-        document.getElementById('finalizar2').onclick = () => {
-            document.getElementsByClassName('active')[0].classList.remove('active');
-            document.getElementById('test').classList.remove('activa')
-            document.getElementById('finalizar2').classList.add('active');
-            document.getElementsByTagName('body')[0].classList.remove('resp-scroll');
-            document.getElementById('test').classList.remove('resp');
-            ver(document.getElementById('finalizar2').value);
-        }
-        document.getElementById('estadis2').onclick = () => {
-            document.getElementsByClassName('active')[0].classList.remove('active');
-            document.getElementById('estadis2').classList.add('active');
-            document.getElementById('test').classList.remove('activa')
-            document.getElementsByTagName('body')[0].classList.add('resp-scroll');
-            document.getElementById('test').classList.toggle('resp');
-            document.getElementsByClassName('b-reserva')[0].classList.add('graph')
-            ver(document.getElementById('estadis2').value);
-        }
-    } 
+    }
 });

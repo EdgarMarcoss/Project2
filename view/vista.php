@@ -17,25 +17,25 @@ if(empty($_SESSION['user'])){
 
     <div class="btn-group">
         <div class="nav-norm">
-            <button type="button" value="activa" id="activa" class="btn btn-default">Reservas activas</button>
-            <button type="button" value="finalizar" id="finalizar" class="btn btn-default">Reservas finalizadas</button>
-            <button type="button" name="estadis" value="estadis" id="estadis" class="btn btn-default">Estadísticas</button>
+            <button type="button" value="activa" id="activa" class="btn btn-default reservaP">Reservas activas</button>
+            <button type="button" value="finalizar" id="finalizar" class="btn btn-default reservaP">Reservas finalizadas</button>
+            <button type="button" name="estadis" value="estadis" id="estadis" class="btn btn-default reservaP">Estadísticas</button>
         </div>
         <ul class="nav-resp">
             <li><a href="#desplegable"><i class="fa-solid fa-bars"></i></a>
                 <div class="desp-prin-div" id="desplegable">
                     <ul class="desp-prin">
                         <li class="cerrar-desp"><a href="#"><i class="fa-solid fa-xmark"></i></a></li>
-                        <li><a href="#"><button type="button" value="activa" id="activa2" class="btn btn-default">Reservas activas</button></a></li>
-                        <li><a href="#"><button type="button" value="finalizar" id="finalizar2" class="btn btn-default">Reservas finalizadas</button></a></li>
-                        <li><a href="#"><button type="button" name="estadis" value="estadis" id="estadis2" class="btn btn-default">Estadísticas</button></a></li>
+                        <li><a href="#"><button type="button" value="activa" id="activa2" class="btn btn-default reservaP">Reservas activas</button></a></li>
+                        <li><a href="#"><button type="button" value="finalizar" id="finalizar2" class="btn btn-default reservaP">Reservas finalizadas</button></a></li>
+                        <li><a href="#"><button type="button" name="estadis" value="estadis" id="estadis2" class="btn btn-default reservaP">Estadísticas</button></a></li>
                         <li><a href="./restaurante.php"><button class="btn btn-default">Salir</button></a></li>
                     </ul>
                 </div>
             </li>
         </ul>
     </div>
-    <a href="./restaurante.php" class="log nav-norm"><i class="fa-regular fa-circle-left"></i></a>
+    <a href="./restaurante.php" class="log nav-norm"><i class="icono fa-regular fa-circle-left"></i></a>
 
     <div class="background b-reserva">
         <div class="contenido tabla-res">
@@ -52,7 +52,7 @@ if(empty($_SESSION['user'])){
                             <th scope="col"><input class="form-control me-2" type="search" id="mesa" placeholder="Mesa" aria-label="Search"></th>
                             <th scope="col"><input class="form-control me-2" type="search" id="camarero" placeholder="Camarero" aria-label="Search"></th>
                         </form>
-                        <th scope="col" colspan="2"><button onclick="filtrar()"  class="btn btn-info">Buscar</button></th>
+                        <th scope="col" colspan="2"><button onclick="filtrar()"  class="btn btn-filtro">Buscar</button></th>
                     </tr>
                     
                     <tr>
@@ -141,7 +141,7 @@ if(empty($_SESSION['user'])){
                                 <th scope="col"><input class="form-control me-2" type="search" id="mesa" placeholder="Mesa" aria-label="Search"></th>
                                 <th scope="col"><input class="form-control me-2" type="search" id="camarero" placeholder="Camarero" aria-label="Search"></th>
                             </form>
-                            <th scope="col" colspan="2"><button onclick="filtrar()"  class="btn btn-info">Buscar</button></th>
+                            <th scope="col" colspan="2"><button onclick="filtrar()"  class="btn btn-filtro">Buscar</button></th>
                         </tr>
                         
                         <tr>

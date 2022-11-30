@@ -24,7 +24,7 @@ include 'cabezera.html';
     <nav>
         <h3><?php echo $_SESSION['nsala'] ?></h3>
     </nav>
-    <a href="restaurante.php" class="volver-btn"><i class="fa-solid fa-circle-left"></i></a>
+    <a href="restaurante.php" class="volver-btn"><i class="icono fa-solid fa-circle-left"></i></a>
     <div class="fondo-mesas">
         <div class="limites">
         <?php 
@@ -45,14 +45,6 @@ include 'cabezera.html';
         ?>
         
         </div>
-        <form action="../controller/crearreservatotal.php" method="post" class="form-res">
-            <input type="hidden" name="sala" value="<?php echo $_SESSION['id_sala'] ?>">
-        <button type="submit" name="submit" >Todas ocupadas</button>
-    </form>
-        <form action="../controller/crearReservatotallib.php" method="post" class="form-res">
-            <input type="hidden" name="sala" value="<?php echo $_SESSION['id_sala'] ?>">
-        <button type="submit" name="submit" >Todas libres</button>
-    </form>
 
     </div>
     <?php

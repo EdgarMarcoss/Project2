@@ -1,3 +1,3 @@
-$(window).on('load', function () {
-    $(".loader-page").css({visibility:"hidden",opacity:"0"})
-  });
+window.addEventListener('load', () => {
+  document.getElementsByClassName('loader-page')[0].style = "visibility:hidden;opacity:0";
+});

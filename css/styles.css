@@ -110,7 +110,7 @@ body.resp-scroll {
     justify-content: center;
     position: absolute;
     top: 0;
-    background: rgba(244,159,130, .8);
+    background: #21262d;
     backdrop-filter: blur(2px);
 }
 .background.b-reserva {
@@ -120,7 +120,7 @@ body.resp-scroll {
 .contenido {
     padding: 20px;
     border: 2px solid black;
-    background-color: rgb(251, 251, 251);
+    background-color: #dce0e3;
     border-radius: 20px;
     color: black;
     max-width: 400px;
@@ -179,13 +179,13 @@ body.resp-scroll {
     width: 100%;
     padding: 5px;
     background: white;
-    border: 1px solid rgba(244,159,130, .8);
+    border: 1px solid rgba(33, 38, 45, 1);
 }
 
 .contenido form input.btn-login {
     width: fit-content !important;
-    background: rgba(244,159,130, .8);
-    color: black;
+    background: rgba(33, 38, 45, 1);
+    color: #dce0e3;
     padding: 8px 25px;
     border: none;
     outline: none;
@@ -281,7 +281,6 @@ nav h3 {
 }
 .contenido.tabla-res table {
     margin: 0;
-    height: 100%;
 }
 .contenido.tabla-res::-webkit-scrollbar {
     width: 8px;     /* Tamaño del scroll en vertical */
@@ -399,6 +398,47 @@ nav h3 {
 .form-res {
     text-align: center;
 }
+
+.btn-crear, .btn-crear.sala {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 1%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+.btn-crear.sala {
+    margin-bottom: 20px;
+}
+.btn-crear button {
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+    margin-left: 10px;
+    background: #dce0e3;
+    border: 0 solid #000;
+    box-shadow: #dce0e3 1px 1px 10px ;
+    font-weight: bold;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn-crear button:hover {
+    background: #fdfdfd;
+    box-shadow: #f9fafa 1px 1px 10px ;
+}
+
+.btn-filtro{
+    background-color: #21262d;
+    color: #dce0e3;
+}
+.btn-filtro:hover{
+    background-color: #21262d;
+    color: #dce0e3;
+}
+
 .btn-reservas, .btn-reservas.sala {
     position: absolute;
     bottom: 0;
@@ -437,6 +477,10 @@ nav h3 {
 #final-reserva {
     margin-top: 20px;
     font-size: 20px;
+}
+
+#crearR{
+    display: none;
 }
 /* FIN RESTAURANTE */
 
@@ -562,7 +606,7 @@ nav h3 {
     flex-wrap: wrap;
     position: absolute;
     top: 0;
-    background: rgba(244,159,130, .8);
+    background: rgba(33, 38, 45, 1);
     backdrop-filter: blur(1px);
 }
 .fondo-mesas .limites {
@@ -653,6 +697,20 @@ nav h3 {
     filter: invert(58%) sepia(13%) saturate(5371%) hue-rotate(48deg) brightness(100%) contrast(347%);
 }
 
+.btn-danger{
+    background-color: #21262d;
+    border-color: #21262d;
+}
+
+.btn-success{
+    background-color: #21262d;
+    border-color: #21262d;
+}
+
+.icono{
+    color:#21262d;
+}
+
 /* FIN PAGINA RESTAURANTE */
 .loader-page {
     position: fixed;
@@ -660,7 +718,7 @@ nav h3 {
     background-image: url('../img/restaurante/carga.jpg');
     background-size: cover;
     background-position: center;
-    background: #f6ae96;
+    background: #21262d;
     left: 0px;
     top: 0px;
     height: 100%;
@@ -706,11 +764,14 @@ nav h3 {
     100% {transform: rotate(360deg)}
 }
 /* TABLA RESERVAS */
+i{
+    color: #dce0e3;
+}
 nav {
     width: 100%;
     position: relative;
     z-index: 5;
-    background-color: #585e5c;
+    background-color: #dce0e3;
     display: flex;
     align-items: center;
     text-align: center;
@@ -718,7 +779,7 @@ nav {
 }
 nav h3 {
     width: 100%;
-    color: #dce0e3;
+    color: #21262d;
     margin: 0;
     padding: 15px 0;
     font-weight: bold;
@@ -731,7 +792,7 @@ nav h3 {
     width: 100%;
     position: relative;
     z-index: 5;
-    background-color: #585e5c;
+    background-color: #dce0e3;
     border-radius: 0;
     display: flex;
     align-items: center;
@@ -751,7 +812,7 @@ nav h3 {
 }
 .btn-group > *:first-child button {
     width: fit-content;
-    color: white;
+    color: #21262d;
     margin: 0;
     padding: 18px 10px;
     font-weight: bold;
@@ -768,16 +829,17 @@ nav h3 {
     /* height: 20px; */
 }
 button.active {
-    color: black !important;
-    background-color: #c5c5c5 !important;
+    color: #dce0e3 !important;
+    background-color: #21262d !important;
     border: none;
     border-radius: 0;
 }
 .table {
-    background-color: azure;
+    background-color: #dce0e3;
     border-radius: 15px;
     overflow: hidden;
     width: 100%;
+    border-color:#21262d;
 }
 .table.resp {
     display: flex;
@@ -801,9 +863,15 @@ button.active {
     justify-content: center;
     padding: 0px 0 26px 0;
 }
+
+td{
+    max-height: 1px;
+}
+
 .table.activa thead tr th:nth-child(3), .table.activa tbody tr td:nth-child(3) {
     display: none;
 }
+
 .table thead tr th:nth-child(1), .table tbody tr td:nth-child(1) {
     width: 72px;
 }
@@ -817,6 +885,21 @@ button.active {
     width: 100%;
 }
 
+#recursosL{
+    display: none;
+}
+
+#usuariosL{
+    display: contents;
+}
+
+#filtroR{
+    display: none;
+}
+
+#filtroU{
+    display: table-row;
+}
 /* FIN TABlA RESERVA */
 
 /* RESPONSIVE */
@@ -970,8 +1053,8 @@ button.active {
 		padding: 20px 25px;
 		line-height: 10px;
 		margin-bottom: 40px;
-		background-color: rgba(244,159,130, 1);
-        box-shadow: rgba(244,159,130, 1) 1px 1px 7px;
+		background-color: #0d1117;
+        box-shadow: #0d1117 1px 1px 7px;
         /* color: #D8000C; */
 		border-radius: 50%;
 		/* height: 100%; */
@@ -1005,7 +1088,7 @@ button.active {
         padding-left: 0;
     }
     .desp-prin li {
-		background-color: rgba(244,159,130, 1);
+		background-color: #0d1117;
 		font-size: 16px;
 		cursor: pointer;
 		transition: all 0.5s;

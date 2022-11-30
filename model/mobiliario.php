@@ -134,5 +134,38 @@ class Mobiliario {
 
     }
 
+    public static function crearMobiliario($numero,$capacidad,$sala){
+        require_once "conexion.php";
+        $result = $pdo->prepare("SELECT * FROM `tbl_salas` WHERE `nombre_sala` = ?");
+        $result->bindParam(1, $sala);
+        $result->execute();
+        $resultado = $result->fetch(PDO::FETCH_ASSOC);
+
+
+        $sql="INSERT INTO `tbl_mobiliario` (`numero_mobiliario`, `tipo_mobiliario`, `estado_mobiliario`, `capacidad_mesa`, `img_mobiliario`, `id_sala`) VALUES (?,'mesa','libre',?,'mesa4.png',?);";
+        $consulta = $pdo->prepare($sql);
+        $consulta->bindParam(1, $numero);
+        $consulta->bindParam(2, $capacidad);
+        $consulta->bindParam(3, $resultado['id']);
+        $consulta->execute();
+    }
+
+    public static function editarMobiliario($id,$numero,$capacidad,$sala){
+        require_once "conexion.php";
+        $result = $pdo->prepare("SELECT * FROM `tbl_salas` WHERE `nombre_sala` = ?");
+        $result->bindParam(1, $sala);
+        $result->execute();
+        $resultado = $result->fetch(PDO::FETCH_ASSOC);
+
+
+        $sql="UPDATE `tbl_mobiliario` SET `numero_mobiliario` = ?, `capacidad_mesa` = ?, `id_sala` = ? WHERE `tbl_mobiliario`.`id` = ?;";
+        $consulta = $pdo->prepare($sql);
+        $consulta->bindParam(1, $numero);
+        $consulta->bindParam(2, $capacidad);
+        $consulta->bindParam(3, $resultado['id']);
+        $consulta->bindParam(4, $id);
+        $consulta->execute();
+    }
+
    
 }
