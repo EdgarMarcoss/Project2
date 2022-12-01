@@ -241,4 +241,10 @@ class Usuario {
         $consulta->bindParam(':dni', $dni);
         $consulta->execute();
     }
+    public static function eliminarUsuario($id){
+        require_once "conexion.php";
+        $consulta = $pdo->prepare("DELETE FROM tbl_usuarios WHERE id = :id");
+        $consulta->bindParam(':id', $id);
+        $consulta->execute();
+    }
 }

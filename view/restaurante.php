@@ -33,8 +33,7 @@ if (!isset($_SESSION['user'])) {
             $vuelta = 0;
             include '../model/usuario.php';                      
             $listaUsuarios=Usuario::getTipoUsuario($_SESSION['user']);
-            
-            
+
             foreach (Sala::getSala() as $element) {
                 echo '<div class="content">';
                 echo '<div class="salas '.explode("_", $element["nombre_sala"])[0].'">
@@ -102,4 +101,5 @@ if (!isset($_SESSION['user'])) {
         </div>
     </div>
 </body>
+<script src="../js/horario.js"></script>
 </html>

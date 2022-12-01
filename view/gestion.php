@@ -1,10 +1,11 @@
 <?php
 session_start();
+error_reporting(0);
 include '../model/usuario.php';                      
 $listaUsuarios=Usuario::getTipoUsuario($_SESSION['user']);
 
 if ($listaUsuarios[0]['personal_usuario']!='admin'){
-    echo "<script>location.href='../index.php'</script>";
+    echo "<script>location.href='./restaurante.php'</script>";
 }
 ?>
 

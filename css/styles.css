@@ -326,6 +326,7 @@ nav h3 {
     transition: all 0.7s;
     border: 2.5px solid rgba(0,0,0,0);
     margin-bottom: 5px;
+    border-radius: 25px;
 
 }
 .content:hover {
@@ -354,6 +355,7 @@ nav h3 {
     justify-content: center;
     text-align: center;
     align-content: center;
+    border-radius: 25px;
     /* margin: 5px; */
 }
 .tipo {
@@ -367,6 +369,9 @@ nav h3 {
     border-radius: 10px;
     backdrop-filter: blur(1px);
 }
+
+
+
 
 .info-salas {
     display: none;
@@ -386,14 +391,20 @@ nav h3 {
     margin: 0;
 }
 
+.reservar_hora{
+    position: absolute;
+    top: 10vh;
+}
+
 .btn-salas {
-    background-color: #f08362;
+    background-color: #21262d;
     border: none;
-    box-shadow: black 0px 1px 8px;
+    box-shadow: #21262d 0px 1px 8px;
     padding: 7px 20px;
     border-radius: 20px;
     font-weight: bold;
     cursor: pointer;
+    color: #dce0e3;
 }
 .form-res {
     text-align: center;
@@ -868,7 +879,7 @@ td{
     max-height: 1px;
 }
 
-.table.activa thead tr th:nth-child(3), .table.activa tbody tr td:nth-child(3) {
+table.activa thead tr:nth-child(1) th:nth-child(4), .table.activa thead tr:nth-child(2) th:nth-child(3), .table.activa tbody tr td:nth-child(3) {
     display: none;
 }
 

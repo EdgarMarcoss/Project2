@@ -116,10 +116,13 @@ class Mobiliario {
         return $this;
     }
 
-    public static function getMobiliario($salas){  
+    public static function getMobiliario($dates){  
 
         include 'conexion.php';
-        $sql="SELECT m.id,m.numero_mobiliario, m.img_mobiliario, m.estado_mobiliario FROM tbl_mobiliario m INNER JOIN tbl_salas s ON m.id_sala=s.id where id_sala=$salas";  
+        $hora = $dates[1];
+        $sala = $dates[0];
+        $where = "and m.id NOT IN ( SELECT id_mobiliario from tbl_reserva where fecha_reserva = '$hora' );";
+        $sql="SELECT m.id,m.numero_mobiliario, m.img_mobiliario, m.estado_mobiliario FROM tbl_mobiliario m INNER JOIN tbl_salas s ON m.id_sala=s.id where id_sala=$sala $where";  
         $listaMobiliario = mysqli_query($conexion, $sql);         
         return $listaMobiliario->fetch_all(MYSQLI_ASSOC);
         

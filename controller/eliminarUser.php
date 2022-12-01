@@ -1,11 +1,9 @@
 <?php
 
-require_once "../model/conexion.php";
+require_once '../model/usuario.php';
 
 $id = $_POST['id'];
 
-$consulta = $pdo->prepare("DELETE FROM tbl_usuarios WHERE id = :id");
-$consulta->bindParam(':id', $id);
-$consulta->execute();
+Usuario::eliminarUsuario($id);
 
 echo "Success";

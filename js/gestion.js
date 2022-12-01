@@ -75,12 +75,13 @@ function Eliminar (id){
     ajax.open('POST','../controller/eliminarUser.php');
     ajax.onload= function (){
         if(ajax.status == 200){
+            console.log(ajax.responseText);
             if(ajax.responseText == 'Success'){
                 alert('Eliminado');
                 listar('');
             }
         }else{
-            resultado.innerText = 'Error';
+            alert('Error');
         }
     }
     ajax.send(formdata);

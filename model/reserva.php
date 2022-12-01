@@ -126,7 +126,7 @@ class Reserva {
         if(empty($id) and empty($fecha_res) and empty($fecha_des) and empty($nombre_reserva) and empty($sala) and empty($mesa) and empty($camarero)){
             $where=''; 
          }else{
-            $where="and r.id like '%".mysqli_real_escape_string($id)."%' and r.fecha_reserva like '%".mysqli_real_escape_string($fecha_res)."%' and r.fecha_desocupacion like '%".mysqli_real_escape_string($fecha_des)."%' and r.nombre_reserva like '%".mysqli_real_escape_string($nombre_reserva)."%' and s.nombre_sala like '%".mysqli_real_escape_string($sala)."%' and m.numero_mobiliario like '%".mysqli_real_escape_string($mesa)."%' and u.nombre_usuario like '%".mysqli_real_escape_string($camarero)."%' "; 
+            $where="and r.id like '%".$id."%' and r.fecha_reserva like '%".$fecha_res."%' and r.fecha_desocupacion like '%".$fecha_des."%' and r.nombre_reserva like '%".$nombre_reserva."%' and s.nombre_sala like '%".$sala."%' and m.numero_mobiliario like '%".$mesa."%' and u.nombre_usuario like '%".$camarero."%' "; 
          }
         $sql="SELECT r.id,r.fecha_reserva,r.fecha_desocupacion,r.nombre_reserva,s.nombre_sala,u.nombre_usuario,m.numero_mobiliario FROM tbl_reserva r INNER JOIN tbl_usuarios u ON r.id_usuario=u.id INNER JOIN tbl_mobiliario m ON m.id=r.id_mobiliario INNER JOIN tbl_salas s ON m.id_sala=s.id where r.fecha_desocupacion != ''  $where ORDER BY r.fecha_desocupacion DESC";  
         $listaReserva = mysqli_query($conexion, $sql);
@@ -138,7 +138,7 @@ class Reserva {
         if(empty($id) and empty($fecha_res) and empty($fecha_des) and empty($nombre_reserva) and empty($sala) and empty($mesa) and empty($camarero)){
             $where=''; 
         }else{
-            $where="and r.id like '%".mysqli_real_escape_string($id)."%' and r.fecha_reserva like '%".mysqli_real_escape_string($fecha_res)."%' and r.fecha_desocupacion like '%".mysqli_real_escape_string($fecha_des)."%' and r.nombre_reserva like '%".mysqli_real_escape_string($nombre_reserva)."%' and s.nombre_sala like '%".mysqli_real_escape_string($sala)."%' and m.numero_mobiliario like '%".mysqli_real_escape_string($mesa)."%' and u.nombre_usuario like '%".mysqli_real_escape_string($camarero)."%' "; 
+            $where="and r.id like '%".$id."%' and r.fecha_reserva like '%".$fecha_res."%' and r.fecha_desocupacion like '%".$fecha_des."%' and r.nombre_reserva like '%".$nombre_reserva."%' and s.nombre_sala like '%".$sala."%' and m.numero_mobiliario like '%".$mesa."%' and u.nombre_usuario like '%".$camarero."%' "; 
         } 
         
         $sql="SELECT r.id,r.fecha_reserva,r.fecha_desocupacion,r.nombre_reserva,s.nombre_sala,u.nombre_usuario,m.numero_mobiliario FROM tbl_reserva r INNER JOIN tbl_usuarios u ON r.id_usuario=u.id INNER JOIN tbl_mobiliario m ON m.id=r.id_mobiliario INNER JOIN tbl_salas s ON m.id_sala=s.id where r.fecha_desocupacion = ''  $where ORDER BY r.fecha_reserva DESC";  

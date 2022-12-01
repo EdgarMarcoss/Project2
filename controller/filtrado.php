@@ -2,6 +2,7 @@
 
 require_once '../model/reserva.php';
 session_start();
+error_reporting(0);
 
 
 if(isset($_POST['id'])){

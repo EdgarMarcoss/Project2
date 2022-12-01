@@ -7,7 +7,10 @@ if (isset($_POST['sala'])) {
     $_SESSION['id_sala'] = $_POST['sala'];
     $_SESSION['nsala'] = $_POST['nsala'];
 }
+
 include 'cabezera.html';
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,24 +29,19 @@ include 'cabezera.html';
     </nav>
     <a href="restaurante.php" class="volver-btn"><i class="icono fa-solid fa-circle-left"></i></a>
     <div class="fondo-mesas">
-        <div class="limites">
-        <?php 
-        
-        require_once '../model/mobiliario.php';
-        foreach (Mobiliario::getMobiliario($_SESSION['id_sala']) as $mesa) {
-            echo '<div class="tarjeta">';
-            echo '<form action="./sala.php" method="post">';
-                // echo '<a href="#'.$mesa["estado_mobiliario"].'"><img class="'.$mesa["estado_mobiliario"].'" src="../img/mesas/'.$mesa["img_mobiliario"].'"></a>';
-                echo '<input type="hidden" name="estado" value="'.$mesa["estado_mobiliario"].'">';
-                echo '<input type="hidden" name="id_mobi" value="'.$mesa["id"].'">';
-                echo '<button type="submit" name="submit" class="img-svg"><img class="'.$mesa["estado_mobiliario"].'" src="../img/mesas/'.$mesa["img_mobiliario"].'"></button>';
-                echo "<br>";
-            echo '</form>';
-            echo '</div>';
-            
-        }
-        ?>
-        
+            <div class="reservar_hora">
+                <input type="date" id="calendario" value="" />
+                <select name="turnoReserva" id="turnoReserva">
+                    <option value="Comidas">Comidas</option>
+                    <option value="Cenas">Cenas</option>
+                </select>
+                <select name="horaReserva" id="horaReserva">
+                    
+                </select>
+                <button type="submit" id="reservaActivar" class="btn btn-primary">Filtrar reserva</button>
+                <button type="submit" id="resetReserva" class="btn btn-primary">Reset</button>
+            </div>
+        <div class="limites" id="limites">
         </div>
 
     </div>
@@ -147,4 +145,5 @@ include 'cabezera.html';
     }
      }};?>
 </body>
+<script src="../js/horario.js"></script>
 </html>
