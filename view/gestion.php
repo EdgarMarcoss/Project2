@@ -204,7 +204,7 @@ if ($listaUsuarios[0]['personal_usuario']!='admin'){
             </div>
             <div>
                 <label for="">Password</label>
-                <input id="editpassword" type="password" name="password" required >
+                <input id="editpassword" type="password" name="password" >
             </div>
             <input type="hidden" name="idp" id="idp" value="">
             <br>

@@ -230,16 +230,29 @@ class Usuario {
     }
     public static function editarUsuario($idp,$tipo,$nombre,$apellido,$correo,$pass,$tel,$dni){
         require_once "conexion.php";
-        $consulta = $pdo->prepare("UPDATE `tbl_usuarios` SET `personal_usuario` = :tipo, `nombre_usuario` = :nombre, `apellido_usuario` = :ape, `email_usuario` = :email, `password_usuario` = :pass, `telefono_usuario` = :telf, `dni_usuario` = :dni WHERE `tbl_usuarios`.`id` = :id ");
-        $consulta->bindParam(':id', $idp);
-        $consulta->bindParam(':tipo', $tipo);
-        $consulta->bindParam(':nombre', $nombre);
-        $consulta->bindParam(':ape', $apellido);
-        $consulta->bindParam(':email', $correo);
-        $consulta->bindParam(':pass', $pass);
-        $consulta->bindParam(':telf', $tel);
-        $consulta->bindParam(':dni', $dni);
-        $consulta->execute();
+        if ($pass != ''){
+            $consulta = $pdo->prepare("UPDATE `tbl_usuarios` SET `personal_usuario` = :tipo, `nombre_usuario` = :nombre, `apellido_usuario` = :ape, `email_usuario` = :email, `password_usuario` = :pass, `telefono_usuario` = :telf, `dni_usuario` = :dni WHERE `tbl_usuarios`.`id` = :id ");
+            $consulta->bindParam(':id', $idp);
+            $consulta->bindParam(':tipo', $tipo);
+            $consulta->bindParam(':nombre', $nombre);
+            $consulta->bindParam(':ape', $apellido);
+            $consulta->bindParam(':email', $correo);
+            $consulta->bindParam(':pass', $pass);
+            $consulta->bindParam(':telf', $tel);
+            $consulta->bindParam(':dni', $dni);
+            $consulta->execute();
+        }else{
+            $consulta = $pdo->prepare("UPDATE `tbl_usuarios` SET `personal_usuario` = :tipo, `nombre_usuario` = :nombre, `apellido_usuario` = :ape, `email_usuario` = :email, `telefono_usuario` = :telf, `dni_usuario` = :dni WHERE `tbl_usuarios`.`id` = :id ");
+            $consulta->bindParam(':id', $idp);
+            $consulta->bindParam(':tipo', $tipo);
+            $consulta->bindParam(':nombre', $nombre);
+            $consulta->bindParam(':ape', $apellido);
+            $consulta->bindParam(':email', $correo);
+            $consulta->bindParam(':telf', $tel);
+            $consulta->bindParam(':dni', $dni);
+            $consulta->execute();
+        }
+        
     }
     public static function eliminarUsuario($id){
         require_once "conexion.php";

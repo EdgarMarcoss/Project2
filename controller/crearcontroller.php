@@ -19,29 +19,6 @@ $numero = $_POST['numero'];
 $capacidad = $_POST['capacidad'];
 $sala = $_POST['salaMesa'];
 
-if(errorNombre($nombre) || errorNombre($apellido) ){
-    ?>
-    <script>location.href='../view/sala.php?error=Error en el nombre o en el apellido'</script>
-    <?php 
-}
-
-if(errorEmail($correo)){
-    ?>
-    <script>location.href='../view/sala.php?error=Error en el correo'</script>
-    <?php 
-}
-
-if(errorTelefono($tel)){
-    ?>
-    <script>location.href='../view/sala.php?error=Error en el Telefono'</script>
-    <?php  
-}
-
-if(errorDni($dni)){
-    ?>
-    <script>location.href='../view/sala.php?error=Error en el DNI'</script>
-    <?php 
-}
 
 
 
@@ -55,8 +32,11 @@ if($_POST['recurso']){
         echo "Success";
     }
 }else{
-
-    $pass = hash('sha256', $pass);
+    if($pass == ''){
+        $pass = '';
+    }else{
+        $pass = hash('sha256', $pass);
+    }
     if($_POST['idp']){
         Usuario::editarUsuario($_POST['idp'],$tipo, $nombre, $apellido, $correo, $pass, $tel, $dni);
         echo "Success";
