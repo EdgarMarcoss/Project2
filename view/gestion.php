@@ -123,6 +123,7 @@ if ($listaUsuarios[0]['personal_usuario']!='admin'){
             <br>
             <input type="hidden" name="recurso" id="recurso" value="recurso">
             </form>
+            <p id="mensajeRec"></p>
             <input type="submit"  id="submitRecurso" class="btn-login" value="Registrar" >
             <a href="#" id="cerrar" class="modal__close">&times;</a> 
         </div> 
@@ -245,6 +246,7 @@ if ($listaUsuarios[0]['personal_usuario']!='admin'){
             <input type="hidden" name="recurso" id="recurso" value="recurso">
             <input type="hidden" name="idRec" id="idRec" value="">
             </form>
+            <p id="mensajeRecEd"></p>
             <input type="submit"  id="editRecurso" class="btn-login" value="Editar" >
             <a href="#" id="cerrar" class="modal__close">&times;</a> 
         </div> 

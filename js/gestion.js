@@ -129,25 +129,39 @@ function Registrar(){
 }
 
 function RegistrarRec(){
-    let form = document.getElementById("registrar_recursos");
-    let formdata = new FormData(form);
-
-    const ajax = new XMLHttpRequest();
-    ajax.open('POST','../controller/crearcontroller.php');
-    ajax.onload= function (){
-        console.log(ajax.responseText)
-        if(ajax.status == 200){
-            if(ajax.responseText == 'Success'){
-                alert('Recurso creado');
-                document.getElementById('cerrar').click()
-                form.reset();
-                listarRecursos('');
-            }
-        }else{
-            alert('Error');
-        }
+    let number = document.getElementById("numero");
+    let capacidad = document.getElementById("capacidad");
+    if(number.value == '' || capacidad.value == ''){
+        document.getElementById('mensajeRec').innerText = "Revise sus datos vacíos";
+        document.getElementById('mensajeRec').style.color = 'red';
+        return false;
     }
-    ajax.send(formdata);
+    else if(isNaN(number.value) || isNaN(capacidad.value)){
+        document.getElementById('mensajeRec').innerText = "Revise sus datos, valores incorrectos";
+        document.getElementById('mensajeRec').style.color = 'red';
+        return false;
+    }else{
+        let form = document.getElementById("registrar_recursos");
+        let formdata = new FormData(form);
+
+        const ajax = new XMLHttpRequest();
+        ajax.open('POST','../controller/crearcontroller.php');
+        ajax.onload= function (){
+            console.log(ajax.responseText)
+            if(ajax.status == 200){
+                if(ajax.responseText == 'Success'){
+                    alert('Recurso creado');
+                    document.getElementById('cerrar').click()
+                    form.reset();
+                    listarRecursos('');
+                }
+            }else{
+                alert('Error');
+            }
+        }
+        ajax.send(formdata);
+    }
+    
 }
 
 function Editar (id){
@@ -198,7 +212,7 @@ function EditarR (id){
         }
     }
     ajax.send(formdata);
-}
+    }
 
 function EditarUser(){
     let form = document.getElementById("editar_user");
@@ -222,6 +236,18 @@ function EditarUser(){
 }
 
 function EditarRec(){
+    let number = document.getElementById("editNumero");
+    let capacidad = document.getElementById("editCapacidad");
+    if(number.value == '' || capacidad.value == ''){
+        document.getElementById('mensajeRecEd').innerText = "Revise sus datos vacíos";
+        document.getElementById('mensajeRecEd').style.color = 'red';
+        return false;
+    }
+    else if(isNaN(number.value) || isNaN(capacidad.value)){
+        document.getElementById('mensajeRecEd').innerText = "Revise sus datos, valores incorrectos";
+        document.getElementById('mensajeRecEd').style.color = 'red';
+        return false;
+    }else{
     let form = document.getElementById("editar_recursos");
     let formdata = new FormData(form);
 
@@ -240,6 +266,7 @@ function EditarRec(){
         }
     }
     ajax.send(formdata);
+}
 }
 
 function EliminarReserva (id){
