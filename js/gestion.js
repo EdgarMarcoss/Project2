@@ -242,6 +242,26 @@ function EditarRec(){
     ajax.send(formdata);
 }
 
+function EliminarReserva (id){
+    let alerta = document.getElementById('alerta');
+    let formdata = new FormData();
+    formdata.append('id',id);
+
+    const ajax = new XMLHttpRequest();
+    ajax.open('POST','../controller/eliminarreserva.php');
+    ajax.onload= function (){
+        if(ajax.status == 200){
+            if(ajax.responseText == 'Success'){
+                alerta.style.display = 'block';
+            }
+        }else{
+            alert('Error');
+        }
+    }
+    ajax.send(formdata);
+}
+
+
 document.getElementById('submitUser').addEventListener("click", () => {
     Registrar();
 });

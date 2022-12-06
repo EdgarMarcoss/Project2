@@ -1,11 +1,9 @@
 <?php
 
-require_once "../model/conexion.php";
+require_once "../model/mobiliario.php";
 
 $id = $_POST['id'];
 
-$consulta = $pdo->prepare("DELETE FROM tbl_mobiliario WHERE id = :id");
-$consulta->bindParam(':id', $id);
-$consulta->execute();
+Mobiliario::eliminarMobiliario($id);
 
 echo "Success";

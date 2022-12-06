@@ -170,5 +170,11 @@ class Mobiliario {
         $consulta->execute();
     }
 
+    public static function eliminarMobiliario($id){
+        require_once "conexion.php";
+        $consulta = $pdo->prepare("DELETE FROM tbl_mobiliario WHERE id = :id");
+        $consulta->bindParam(':id', $id);
+        $consulta->execute();
+    }
    
 }

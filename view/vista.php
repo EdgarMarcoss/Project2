@@ -21,6 +21,11 @@ if(empty($_SESSION['user'])){
             <button type="button" value="finalizar" id="finalizar" class="btn btn-default reservaP">Reservas finalizadas</button>
             <button type="button" name="estadis" value="estadis" id="estadis" class="btn btn-default reservaP">Estadísticas</button>
         </div>
+            <div id="alerta" class="error-msg" style="display:none">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <i class="fa fa-times-circle"></i>
+                <strong>Reserva eliminada</strong>
+            </div>
         <ul class="nav-resp">
             <li><a href="#desplegable"><i class="fa-solid fa-bars"></i></a>
                 <div class="desp-prin-div" id="desplegable">
@@ -36,7 +41,7 @@ if(empty($_SESSION['user'])){
         </ul>
     </div>
     <a href="./restaurante.php" class="log nav-norm"><i class="icono fa-regular fa-circle-left"></i></a>
-
+    
     <div class="background b-reserva">
         <div class="contenido tabla-res">
             <table class="table" style="text-align: center;" id="test">
@@ -151,7 +156,8 @@ if(empty($_SESSION['user'])){
                             <th>Nombre reserva</th>       
                             <th>Sala</th>   
                             <th>Mesa</th> 
-                            <th>Camarero</th>            
+                            <th>Camarero</th>
+                            <th>Acciones</th>             
                         </tr>
                     </thead>
                     <tbody id="tablaVer">
@@ -175,6 +181,7 @@ if(empty($_SESSION['user'])){
                             <td>${resul.data[i]['nombre_sala']}</td>
                             <td>${resul.data[i]['numero_mobiliario']}</td>
                             <td>${resul.data[i]['nombre_usuario']}</td>
+                            <td><button type='button' class='btn btn-danger' onclick=EliminarReserva('${resul.data[i]['id']}')><i class="fa-solid fa-trash"></i></button></td>
                             </tr>
                             `;
                         }
@@ -271,4 +278,5 @@ if(empty($_SESSION['user'])){
         </div>
     </div>
 </body>
+<script type="text/javascript" src="../js/gestion.js"></script>
 </html>

@@ -2,14 +2,50 @@
 
 error_reporting(0);
 session_start();
-   
+
+require_once '../includes/valid_inc.php';
 require_once '../model/usuario.php';
 require_once '../model/mobiliario.php';
 
+$tipo = $_POST['tipoUser'];
+$nombre=$_POST['nombre'];
+$apellido = $_POST['ape'];
+$correo = $_POST['correo']; 
+$pass = $_POST['password']; 
+$tel = $_POST['telf']; 
+$dni = $_POST['dni'];
+
+$numero = $_POST['numero'];
+$capacidad = $_POST['capacidad'];
+$sala = $_POST['salaMesa'];
+
+if(errorNombre($nombre) || errorNombre($apellido) ){
+    ?>
+    <script>location.href='../view/sala.php?error=Error en el nombre o en el apellido'</script>
+    <?php 
+}
+
+if(errorEmail($correo)){
+    ?>
+    <script>location.href='../view/sala.php?error=Error en el correo'</script>
+    <?php 
+}
+
+if(errorTelefono($tel)){
+    ?>
+    <script>location.href='../view/sala.php?error=Error en el Telefono'</script>
+    <?php  
+}
+
+if(errorDni($dni)){
+    ?>
+    <script>location.href='../view/sala.php?error=Error en el DNI'</script>
+    <?php 
+}
+
+
+
 if($_POST['recurso']){
-    $numero = $_POST['numero'];
-    $capacidad = $_POST['capacidad'];
-    $sala = $_POST['salaMesa'];
 
     if($_POST['idRec']){
         Mobiliario::editarMobiliario($_POST['idRec'],$numero,$capacidad,$sala);
@@ -19,13 +55,6 @@ if($_POST['recurso']){
         echo "Success";
     }
 }else{
-    $tipo = $_POST['tipoUser'];
-    $nombre=$_POST['nombre'];
-    $apellido = $_POST['ape'];
-    $correo = $_POST['correo']; 
-    $pass = $_POST['password']; 
-    $tel = $_POST['telf']; 
-    $dni = $_POST['dni'];
 
     $pass = hash('sha256', $pass);
     if($_POST['idp']){

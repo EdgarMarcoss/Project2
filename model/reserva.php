@@ -128,7 +128,7 @@ class Reserva {
          }else{
             $where="and r.id like '%".$id."%' and r.fecha_reserva like '%".$fecha_res."%' and r.fecha_desocupacion like '%".$fecha_des."%' and r.nombre_reserva like '%".$nombre_reserva."%' and s.nombre_sala like '%".$sala."%' and m.numero_mobiliario like '%".$mesa."%' and u.nombre_usuario like '%".$camarero."%' "; 
          }
-        $sql="SELECT r.id,r.fecha_reserva,r.fecha_desocupacion,r.nombre_reserva,s.nombre_sala,u.nombre_usuario,m.numero_mobiliario FROM tbl_reserva r INNER JOIN tbl_usuarios u ON r.id_usuario=u.id INNER JOIN tbl_mobiliario m ON m.id=r.id_mobiliario INNER JOIN tbl_salas s ON m.id_sala=s.id where r.fecha_desocupacion != ''  $where ORDER BY r.fecha_desocupacion DESC";  
+        $sql="SELECT r.id,r.fecha_reserva,r.fecha_desocupacion,r.nombre_reserva,s.nombre_sala,u.nombre_usuario,m.numero_mobiliario FROM tbl_reserva r INNER JOIN tbl_usuarios u ON r.id_usuario=u.id INNER JOIN tbl_mobiliario m ON m.id=r.id_mobiliario INNER JOIN tbl_salas s ON m.id_sala=s.id where r.fecha_desocupacion < CURRENT_TIMESTAMP()  $where ORDER BY r.fecha_desocupacion DESC";  
         $listaReserva = mysqli_query($conexion, $sql);
         $listaReserva=$listaReserva->fetch_all(MYSQLI_ASSOC); 
         return $listaReserva;      
@@ -141,13 +141,13 @@ class Reserva {
             $where="and r.id like '%".$id."%' and r.fecha_reserva like '%".$fecha_res."%' and r.fecha_desocupacion like '%".$fecha_des."%' and r.nombre_reserva like '%".$nombre_reserva."%' and s.nombre_sala like '%".$sala."%' and m.numero_mobiliario like '%".$mesa."%' and u.nombre_usuario like '%".$camarero."%' "; 
         } 
         
-        $sql="SELECT r.id,r.fecha_reserva,r.fecha_desocupacion,r.nombre_reserva,s.nombre_sala,u.nombre_usuario,m.numero_mobiliario FROM tbl_reserva r INNER JOIN tbl_usuarios u ON r.id_usuario=u.id INNER JOIN tbl_mobiliario m ON m.id=r.id_mobiliario INNER JOIN tbl_salas s ON m.id_sala=s.id where r.fecha_desocupacion = ''  $where ORDER BY r.fecha_reserva DESC";  
+        $sql="SELECT r.id,r.fecha_reserva,r.fecha_desocupacion,r.nombre_reserva,s.nombre_sala,u.nombre_usuario,m.numero_mobiliario FROM tbl_reserva r INNER JOIN tbl_usuarios u ON r.id_usuario=u.id INNER JOIN tbl_mobiliario m ON m.id=r.id_mobiliario INNER JOIN tbl_salas s ON m.id_sala=s.id where r.fecha_desocupacion > CURRENT_TIMESTAMP()  $where ORDER BY r.fecha_reserva DESC";  
         $listaReserva = mysqli_query($conexion, $sql);
         $listaReserva=$listaReserva->fetch_all(MYSQLI_ASSOC);  
         return $listaReserva;      
     }          
     
-    public static function crearReserva($correo,$nombre_reserva, $id_mesa){
+    public static function crearReserva($correo,$nombre_reserva, $id_mesa,$hora = ''){
 
         if ($nombre_reserva != ''){
         require_once "conexion.php";
@@ -155,19 +155,40 @@ class Reserva {
             $id=mysqli_query($conexion,$sql1);
             $id=$id->fetch_all(MYSQLI_ASSOC)[0]['id'];
 
-            $sql="INSERT INTO tbl_reserva (nombre_reserva,id_usuario,id_mobiliario) VALUES (?,?,?);";
-            $stmt=mysqli_stmt_init($conexion);
-            mysqli_stmt_prepare($stmt,$sql);
-            mysqli_stmt_bind_param($stmt,"sii",$nombre_reserva,$id, $id_mesa);
-            mysqli_stmt_execute($stmt);
+            
 
-            $sql =("UPDATE `tbl_mobiliario` SET `estado_mobiliario` = 'ocupado' WHERE `id`=?");
-            $stmt=mysqli_stmt_init($conexion);
-            mysqli_stmt_prepare($stmt,$sql);
-            mysqli_stmt_bind_param($stmt,"i",$id_mesa);
-            mysqli_stmt_execute($stmt);
+            if(!empty($hora)){
+                $fecha = mysqli_query($conexion,"SELECT DATE_ADD(date_format('$hora','%Y-%m-%d %H:00:00'), INTERVAL 1 HOUR) as 'fecha';"); 
+                $fecha=$fecha->fetch_all(MYSQLI_ASSOC)[0]['fecha'];
 
-            mysqli_stmt_close($stmt);
+                if($hora<date("Y-m-d H:i:s")){
+                    return false;
+                }else{
+                    $sql="INSERT INTO tbl_reserva (nombre_reserva,id_usuario,id_mobiliario,fecha_desocupacion,fecha_reserva) VALUES (?,?,?,?,?);";
+                    $stmt=mysqli_stmt_init($conexion);
+                    mysqli_stmt_prepare($stmt,$sql);
+                    mysqli_stmt_bind_param($stmt,"siiss",$nombre_reserva,$id, $id_mesa,$fecha,$hora);
+                    mysqli_stmt_execute($stmt);
+                }
+
+            }else{
+                $fecha = mysqli_query($conexion,"SELECT DATE_ADD(date_format(current_timestamp(),'%Y-%m-%d %H:00:00'), INTERVAL 1 HOUR) as 'fecha';"); 
+                $fecha=$fecha->fetch_all(MYSQLI_ASSOC)[0]['fecha'];
+
+                $sql="INSERT INTO tbl_reserva (nombre_reserva,id_usuario,id_mobiliario,fecha_desocupacion) VALUES (?,?,?,?);";
+                $stmt=mysqli_stmt_init($conexion);
+                mysqli_stmt_prepare($stmt,$sql);
+                mysqli_stmt_bind_param($stmt,"siis",$nombre_reserva,$id, $id_mesa,$fecha);
+                mysqli_stmt_execute($stmt);
+                $sql =("UPDATE `tbl_mobiliario` SET `estado_mobiliario` = 'ocupado' WHERE `id`=?");
+                $stmt=mysqli_stmt_init($conexion);
+                mysqli_stmt_prepare($stmt,$sql);
+                mysqli_stmt_bind_param($stmt,"i",$id_mesa);
+                mysqli_stmt_execute($stmt);
+
+                mysqli_stmt_close($stmt);
+            }
+            
         }
         
         
@@ -218,22 +239,32 @@ class Reserva {
         
     }
 
-    public static function eliminarReserva($id_mesa){     
-      
+    public static function eliminarReserva($id){     
         require_once 'conexion.php';
-        $sql =("UPDATE `tbl_reserva` SET `fecha_desocupacion` = now() WHERE `id_mobiliario`=? and `fecha_desocupacion` = ''");
-        $stmt=mysqli_stmt_init($conexion);
-        mysqli_stmt_prepare($stmt,$sql);
-        mysqli_stmt_bind_param($stmt,"i",$id_mesa);  
-        mysqli_stmt_execute($stmt); 
-
-        $sql =("UPDATE `tbl_mobiliario` SET `estado_mobiliario` = 'libre' WHERE `id`=?");
-        $stmt=mysqli_stmt_init($conexion);
-        mysqli_stmt_prepare($stmt,$sql);
-        mysqli_stmt_bind_param($stmt,"i",$id_mesa);
-        mysqli_stmt_execute($stmt);
-
-        mysqli_stmt_close($stmt);       
+        $consulta=$pdo->prepare("DELETE FROM tbl_reserva WHERE id = :id");
+        $consulta->bindParam(':id',$id);  
+        $consulta->execute();    
+    }
+    
+    public static function compruebaEstado(){     
+        require_once 'conexion.php';
+        $datos = array();
+        $result = $pdo->prepare("SELECT r.id,r.fecha_reserva,max(r.fecha_desocupacion),IF(max(r.fecha_desocupacion)<CURRENT_TIMESTAMP(), 'Fin', 'Actual') as 'Estado',r.nombre_reserva,s.nombre_sala,u.nombre_usuario,m.numero_mobiliario,r.id_mobiliario FROM tbl_reserva r INNER JOIN tbl_usuarios u ON r.id_usuario=u.id INNER JOIN tbl_mobiliario m ON m.id=r.id_mobiliario INNER JOIN tbl_salas s ON m.id_sala=s.id group by r.id_mobiliario; ");
+        $result->execute();
+        $resultado = $result->fetchAll(PDO::FETCH_ASSOC);
+        foreach ( $resultado as $row ){
+            if($row['Estado'] == 'Fin'){
+                $result = $pdo->prepare("UPDATE tbl_mobiliario SET estado_mobiliario = 'libre' WHERE tbl_mobiliario.id = ? and (estado_mobiliario != 'libre' or estado_mobiliario = 'mantenimiento')");
+                $result->bindParam(1,$row['id_mobiliario']);
+                $result->execute();
+            }else if($row['Estado'] == 'Actual'){
+                $result = $pdo->prepare("UPDATE tbl_mobiliario SET estado_mobiliario = 'ocupado' WHERE tbl_mobiliario.id = ? and estado_mobiliario = 'libre'");
+                $result->bindParam(1,$row['id_mobiliario']);
+                $result->execute();
+            }
+            $datos[] = $row['id_mobiliario'];
+        }
+        return $datos;    
     } 
 
 

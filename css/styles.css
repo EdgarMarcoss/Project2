@@ -44,6 +44,29 @@
   }
 
 /*ESTILOS ERROR*/
+
+
+.button{
+    width: 150px;
+    height: 35px;
+    border: none;
+    outline: none;
+    background: #dce0e3;
+    color: #21262d;
+    font-size: 18px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 6px 20px -5px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.actives{
+    background: #ff2b75;
+    transition: 1s;
+}
+
 .error-msg {
     position: absolute;
     top: 0;
@@ -722,6 +745,10 @@ nav h3 {
     color:#21262d;
 }
 
+.icono:hover{
+    color:#21262d;
+}
+
 /* FIN PAGINA RESTAURANTE */
 .loader-page {
     position: fixed;
@@ -1057,6 +1084,9 @@ table.activa thead tr:nth-child(1) th:nth-child(4), .table.activa thead tr:nth-c
 		bottom: 0;
 		left: 0;
 	}
+    .nav-resp {
+        background-color: #21262d;
+    }
     .cerrar-desp a {
 		text-align: end;
 		color: white;

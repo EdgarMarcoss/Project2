@@ -32,6 +32,9 @@ function filtrar(hora){
     ajax.open('POST','../controller/hora.php');
     ajax.onload= function (){
         if(ajax.status == 200){
+            if(hora){
+                console.log(hora);
+            }
             var resul = JSON.parse(ajax.responseText);
             resultado.innerHTML = '';
                 for (let i = 0; i < resul.length; i++) {
@@ -53,14 +56,32 @@ function filtrar(hora){
     ajax.send(formdata);
 }
 
+function comprueba(){
+    let formdata = new FormData();
+    formdata.append('estado','Correcto')
+
+    const ajax = new XMLHttpRequest();
+    ajax.open('POST','../controller/comprobarEstado.php');
+    ajax.onload= function (){
+        if(ajax.status == 200){
+            console.log(ajax.responseText);
+        }else{
+            console.log('Error');
+        }
+    }
+    ajax.send(formdata);
+}
+
 document.getElementById('turnoReserva').addEventListener("change", () => {
     horas(document.getElementById('turnoReserva').value);
 });
 document.getElementById('reservaActivar').addEventListener("click", () => {
+    document.getElementById('reservaActivar').classList.add("actives");
     filtrar(document.getElementById('calendario').value + ' ' + document.getElementById('horaReserva').value + ':00')
     
 });
 document.getElementById('resetReserva').addEventListener("click", () => {
+    document.getElementById('reservaActivar').classList.remove("actives");
     filtrar()
 });
 document.getElementById('calendario').addEventListener("change", () => {
@@ -77,4 +98,5 @@ window.onload=function () {
     horas('Comidas');
     document.getElementById('calendario').value =  new Date().toISOString().slice(0, 10);
     filtrar()
+    comprueba();
 }

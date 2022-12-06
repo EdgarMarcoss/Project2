@@ -1,9 +1,12 @@
 <?php
 
     require_once '../model/reserva.php';  
-    $id_mesa = $_POST['mesa'];    
-    Reserva::eliminarReserva($id_mesa);   
+    $id = $_POST['id'];    
+    
+    Reserva::eliminarReserva($id);
+    echo "Success";
+    
  
-    echo"<script>window.location.href = '../view/sala.php' </script>";
+
 
 

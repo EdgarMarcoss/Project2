@@ -38,8 +38,8 @@ include 'cabezera.html';
                 <select name="horaReserva" id="horaReserva">
                     
                 </select>
-                <button type="submit" id="reservaActivar" class="btn btn-primary">Filtrar reserva</button>
-                <button type="submit" id="resetReserva" class="btn btn-primary">Reset</button>
+                <button type="submit" id="reservaActivar" class="button">Filtrar reserva</button>
+                <button type="submit" id="resetReserva" class="button">Reset</button>
             </div>
         <div class="limites" id="limites">
         </div>
@@ -49,33 +49,7 @@ include 'cabezera.html';
     include '../model/usuario.php';                      
     $listaUsuarios=Usuario::getTipoUsuario($_SESSION['user']);
     if (isset($_POST['submit'])){
-        if ($_POST['estado'] == 'ocupado') { 
-        
-        if ($listaUsuarios[0]['personal_usuario']=='camarero'){?>        
-            <div id="libre" class="modalmask">
-                <div class="contenido modalbox">
-                <a href="" title="Close" class="close">X</a>
-                    <h2 class="login-text"><span>Finalizar Reserva</span></h2>                    
-                        
-                    <form action="../controller/eliminarreserva.php" method="post" class="form-res" onsubmit="return valid()">
-                        <input type="hidden" name="mesa" value="<?php echo $_POST['id_mobi'] ?>" id="id_mesa">
-                        <div class="reservar">                     
-                        
-                            <select name="motivo" id="final-reserva">
-                                <option value="finalizar" default>Finalizar</option>
-                                
-                            </select>                        
-                       
-                            <!-- <p id="mensaje2"></p> -->
-                        </div>
-
-                        <input type="submit"  id="submit" class="btn-login" value="Enviar" >
-                    </form>
-                </div>
-            </div>
-            <?php  
-        }
-    } else if ($_POST['estado'] == 'mantenimiento') { 
+        if ($_POST['estado'] == 'mantenimiento') { 
 
         if ($listaUsuarios[0]['personal_usuario']=='mantenimiento'){?>
         <div id="libre" class="modalmask">
@@ -103,7 +77,7 @@ include 'cabezera.html';
     <?php
     }}else{ 
     
-    if ($listaUsuarios[0]['personal_usuario']=='camarero'){?>
+    if ($listaUsuarios[0]['personal_usuario']=='camarero' and $_SESSION['hora'] != 'undefined'){?>
         <div id="libre" class="modalmask">
             <div class="contenido modalbox">
             <a href="" title="Close" class="close">X</a>
@@ -117,21 +91,50 @@ include 'cabezera.html';
                                 <select name="motivo" id="final-reserva">
                                     <option value="reserva" default>Reserva</option>
                                     <option value="incidencia">Incidencia</option>
-                                    <option value="Cambiar">Numero de sillas</option>
                                 </select> 
                                 <div id="reserva-campo">
                                     <label for="">Nombre Reserva</label><br>
                                     <input type="text" name="reserva">
                                     <br>
                                 </div>
+                                <input type="hidden" name="hora" value="<?php echo $_SESSION['hora'] ?>" id="hora">
                                 <div id="incidencia-campo">
                                     <label for="">Motivo Incidencia</label><br>
                                     <input type="text-area" name="incidencia">
                                     <br>
                                 </div>
-                                <div id="Cambiar-campo">
-                                    <label for="">Numero</label><br>
-                                    <input type="text-area" name="Cambiar">
+                                        
+                        </div>
+                        <input type="submit"  id="submit" class="btn-login" value="Crear" >
+                    </form>         
+                
+            </div>
+        </div>
+        <?php
+    }else if($listaUsuarios[0]['personal_usuario']=='camarero' and $_POST['estado'] == 'libre'){?>
+        <div id="libre" class="modalmask">
+            <div class="contenido modalbox">
+            <a href="" title="Close" class="close">X</a>
+                <h2 class="login-text"><span>Crear</span></h2>           
+                
+                    <form action="../controller/crearreserva.php" method="post" onsubmit="return valid()">
+                        <input type="hidden" name="mesa" value="<?php echo $_POST['id_mobi'] ?>" id="id_mesa">
+                        <div class="reservar">
+                        
+                            
+                                <select name="motivo" id="final-reserva">
+                                    <option value="reserva" default>Reserva</option>
+                                    <option value="incidencia">Incidencia</option>
+                                </select> 
+                                <div id="reserva-campo">
+                                    <label for="">Nombre Reserva</label><br>
+                                    <input type="text" name="reserva">
+                                    <br>
+                                </div>
+                                <input type="hidden" name="hora" value="<?php echo $_SESSION['hora'] ?>" id="hora">
+                                <div id="incidencia-campo">
+                                    <label for="">Motivo Incidencia</label><br>
+                                    <input type="text-area" name="incidencia">
                                     <br>
                                 </div>
                                         
