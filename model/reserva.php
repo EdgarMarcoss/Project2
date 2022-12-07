@@ -161,7 +161,7 @@ class Reserva {
                 $fecha = mysqli_query($conexion,"SELECT DATE_ADD(date_format('$hora','%Y-%m-%d %H:00:00'), INTERVAL 1 HOUR) as 'fecha';"); 
                 $fecha=$fecha->fetch_all(MYSQLI_ASSOC)[0]['fecha'];
 
-                if($hora<date("Y-m-d H:i:s")){
+                if($hora<=date("Y-m-d H:i:s")){
                     return false;
                 }else{
                     $sql="INSERT INTO tbl_reserva (nombre_reserva,id_usuario,id_mobiliario,fecha_desocupacion,fecha_reserva) VALUES (?,?,?,?,?);";
@@ -239,17 +239,37 @@ class Reserva {
         
     }
 
-    public static function eliminarReserva($id){     
-        require_once 'conexion.php';
-        $consulta=$pdo->prepare("DELETE FROM tbl_reserva WHERE id = :id");
-        $consulta->bindParam(':id',$id);  
-        $consulta->execute();    
+    public static function eliminarReserva($id){
+        require_once 'conexion.php';   
+    
+        try{
+            $pdo->beginTransaction();
+            $consulta=$pdo->prepare("SELECT id_mobiliario FROM tbl_reserva WHERE id = :id");
+            $consulta->bindParam(':id',$id);  
+            $consulta->execute();
+            $idM = $consulta->fetch(PDO::FETCH_ASSOC)['id_mobiliario'];  
+            
+            $consulta=$pdo->prepare("DELETE FROM tbl_reserva WHERE id = :id");
+            $consulta->bindParam(':id',$id);  
+            $consulta->execute();  
+
+            $result = $pdo->prepare("UPDATE tbl_mobiliario SET estado_mobiliario = 'libre' WHERE tbl_mobiliario.id = ? ");
+            $result->bindParam(1,$idM);
+            $result->execute();
+
+            $pdo->commit();
+            return true;
+        }catch(Exception $e){
+            $conexion->rollback();
+            echo "Error: ".$e->getMessage();
+            return false;
+        } 
     }
     
     public static function compruebaEstado(){     
         require_once 'conexion.php';
         $datos = array();
-        $result = $pdo->prepare("SELECT r.id,r.fecha_reserva,max(r.fecha_desocupacion),IF(max(r.fecha_desocupacion)<CURRENT_TIMESTAMP(), 'Fin', 'Actual') as 'Estado',r.nombre_reserva,s.nombre_sala,u.nombre_usuario,m.numero_mobiliario,r.id_mobiliario FROM tbl_reserva r INNER JOIN tbl_usuarios u ON r.id_usuario=u.id INNER JOIN tbl_mobiliario m ON m.id=r.id_mobiliario INNER JOIN tbl_salas s ON m.id_sala=s.id group by r.id_mobiliario; ");
+        $result = $pdo->prepare("SELECT r.id,r.fecha_reserva,max(r.fecha_desocupacion),IF(max(r.fecha_desocupacion)<CURRENT_TIMESTAMP(), 'Fin', 'Pendiente') as 'Estado', IF(max(r.fecha_desocupacion)>CURRENT_TIMESTAMP() and max(r.fecha_reserva)<CURRENT_TIMESTAMP(), 'Actualmente', 'No actualmente') as 'Actual', r.nombre_reserva,s.nombre_sala,u.nombre_usuario,m.numero_mobiliario,r.id_mobiliario FROM tbl_reserva r INNER JOIN tbl_usuarios u ON r.id_usuario=u.id INNER JOIN tbl_mobiliario m ON m.id=r.id_mobiliario INNER JOIN tbl_salas s ON m.id_sala=s.id group by r.id_mobiliario;  ");
         $result->execute();
         $resultado = $result->fetchAll(PDO::FETCH_ASSOC);
         foreach ( $resultado as $row ){
@@ -257,11 +277,18 @@ class Reserva {
                 $result = $pdo->prepare("UPDATE tbl_mobiliario SET estado_mobiliario = 'libre' WHERE tbl_mobiliario.id = ? and (estado_mobiliario != 'libre' or estado_mobiliario = 'mantenimiento')");
                 $result->bindParam(1,$row['id_mobiliario']);
                 $result->execute();
-            }else if($row['Estado'] == 'Actual'){
-                $result = $pdo->prepare("UPDATE tbl_mobiliario SET estado_mobiliario = 'ocupado' WHERE tbl_mobiliario.id = ? and estado_mobiliario = 'libre'");
-                $result->bindParam(1,$row['id_mobiliario']);
-                $result->execute();
+            }else if($row['Estado'] == 'Pendiente'){
+                if($row['Actual'] == 'Actualmente'){
+                    $result = $pdo->prepare("UPDATE tbl_mobiliario SET estado_mobiliario = 'ocupado' WHERE tbl_mobiliario.id = ? ");
+                    $result->bindParam(1,$row['id_mobiliario']);
+                    $result->execute();
+                }else if($row['Actual'] == 'No actualmente'){
+                    $result = $pdo->prepare("UPDATE tbl_mobiliario SET estado_mobiliario = 'libre' WHERE tbl_mobiliario.id = ? ");
+                    $result->bindParam(1,$row['id_mobiliario']);
+                    $result->execute();
+                }
             }
+            
             $datos[] = $row['id_mobiliario'];
         }
         return $datos;    

@@ -142,29 +142,36 @@ if ($listaUsuarios[0]['personal_usuario']!='admin'){
             <div>
                 <label for="">Nombre</label>
                 <input id="nombre" type="text" name="nombre" required >
+                <p id="mensajeRegNom"></p>
             </div>
             <div>
                 <label for="">Apellido</label>
                 <input id="ape" type="text" name="ape" required >
+                <p id="mensajeRegApe"></p>
             </div>
             <div>
                 <label for="">Correo</label>
                 <input id="mail" type="mail" name="correo" required >
+                <p id="mensajeRegMail"></p>
             </div>
             <div>
                 <label for="">Teléfono</label>
                 <input id="telf" type="text" name="telf" required >
+                <p id="mensajeRegTelf"></p>
             </div>
             <div>
                 <label for="">DNI</label>
                 <input id="nif" type="text" name="dni" required >
+                <p id="mensajeRegNif"></p>
             </div>
             <div>
                 <label for="">Password</label>
                 <input id="password" type="password" name="password" required >
+                <p id="mensajeRegPass"></p>
             </div>
             <br>
             </form>
+            <p id="mensajeReg"></p>
             <input type="submit"  id="submitUser" class="btn-login" value="Registrar" >
             <a href="#" id="cerrar" class="modal__close">&times;</a> 
         </div> 
